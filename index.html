@@ -4,12 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       canvas {
-        border: 1px solid #d3d3d3;
-        background-color: #f1f1f1;
+        background-color: #b6e4f0c2;
       }
     </style>
-    <title>벽피하기 게임</title>
+      <title>외계인 피하기 게임</title>
+    </p>
   </head>
+
   <body onload="startGame()">
     <script>
       var myGamePiece;
@@ -24,7 +25,7 @@
           30,
           120,
           "player",
-          "gither.jpg"
+          "gither.png"
         );
         myScore = new component("30px", "Consolas", "black", 280, 40, "text");
         myGameArea.start();
@@ -111,6 +112,8 @@
         for (i = 0; i < myObstacles.length; i += 1) {
           if (myGamePiece.crashWith(myObstacles[i])) {
             myGameArea.stop();
+            alert("GAME OVER " + myScore.text);
+            window.location.reload();
             return;
           }
         }
@@ -118,30 +121,30 @@
         myGamePiece.speedX = 0;
         myGamePiece.speedY = 0;
         if (myGameArea.keys && myGameArea.keys[37]) {
-          myGamePiece.speedX = -1;
+          myGamePiece.speedX = -2.5;
         }
         if (myGameArea.keys && myGameArea.keys[39]) {
-          myGamePiece.speedX = 1;
+          myGamePiece.speedX = 3;
         }
         if (myGameArea.keys && myGameArea.keys[38]) {
-          myGamePiece.speedY = -1;
+          myGamePiece.speedY = -2.5;
         }
         if (myGameArea.keys && myGameArea.keys[40]) {
-          myGamePiece.speedY = 1;
+          myGamePiece.speedY = 2.5;
         }
         myGameArea.frameNo += 1;
-        if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        if (myGameArea.frameNo == 1 || everyinterval(60)) {
           x = myGameArea.canvas.width;
           minHeight = 20;
-          maxHeight = 90;
+          maxHeight = 100;
           height = Math.floor(
             Math.random() * (maxHeight - minHeight + 90) + minHeight
           );
-          minGap = 60;
+          minGap = 50;
           maxGap = 120;
           gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
           myObstacles.push(
-            new component(50, height, "green", x, 0, "obstacle", "dhaiuh.jpg")
+            new component(50, height, "green", x, 0, "obstacle", "dhaiuh.png")
           );
           myObstacles.push(
             new component(
@@ -151,12 +154,12 @@
               x,
               height + gap,
               "obstacle",
-              "dhaiuh.jpg"
+              "brie.png"
             )
           );
         }
         for (i = 0; i < myObstacles.length; i += 1) {
-          myObstacles[i].x += -4;
+          myObstacles[i].x += -7.5;
           myObstacles[i].newPos();
           myObstacles[i].update();
         }
