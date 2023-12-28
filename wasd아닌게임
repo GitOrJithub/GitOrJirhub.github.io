@@ -125,16 +125,16 @@
         myGamePieceHitbox.x = myGamePiece.x;
         myGamePieceHitbox.y = myGamePiece.y;
         myGamePieceHitbox.newPos();
-        if (myGameArea.keys && myGameArea.keys[68]) {
+        if (myGameArea.keys && myGameArea.keys[37]) {
           myGamePiece.speedX = 3;
         }
-        if (myGameArea.keys && myGameArea.keys[65]) {
+        if (myGameArea.keys && myGameArea.keys[39]) {
           myGamePiece.speedX = -3;
         }
-        if (myGameArea.keys && myGameArea.keys[83]) {
+        if (myGameArea.keys && myGameArea.keys[38]) {
           myGamePiece.speedY = 3;
         }
-        if (myGameArea.keys && myGameArea.keys[87]) {
+        if (myGameArea.keys && myGameArea.keys[40]) {
           myGamePiece.speedY = -3;
         }
         myGameArea.frameNo += 1;
@@ -185,7 +185,7 @@ for (i = 0; i < myObstacles.length; i += 1) {
         return false;
       }
     </script>
-<div><h>컨트롤 W,A,S,D </h></div>
+<div><h>컨트롤 방향키 </h></div>
     <div><h>1000점 소상품</h></div>
       <div><div><h>2500점 중상품</h></div></div>
     <div>3000점 대상품</div>
