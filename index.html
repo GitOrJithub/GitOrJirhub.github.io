@@ -16,30 +16,32 @@
       var myGamePiece;
       var myObstacles = [];
       var myScore;
+      var myGamePieceHitbox
 
       function startGame() {
         myGamePiece = new component(
-          80,
+          70,
           30,
           "red",
-          30,
-          120,
+          20,
+          100,
           "player",
           "gither.png"
         );
-        myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+        myGamePieceHitbox = new component(50, 20, "black", 20, 90,);
+        myScore = new component("30px", "Consolas", "black", 5, 40, "text");
         myGameArea.start();
       }
 
       var myGameArea = {
         canvas: document.createElement("canvas"),
         start: function () {
-          this.canvas.width = 800;
+          this.canvas.width = 700;
           this.canvas.height = 400;
           this.context = this.canvas.getContext("2d");
           document.body.insertBefore(this.canvas, document.body.childNodes[0]);
           this.frameNo = 0;
-          this.interval = setInterval(updateGameArea, 20);
+          this.interval = setInterval(updateGameArea, 18.5);
           window.addEventListener("keydown", function (e) {
             myGameArea.keys = myGameArea.keys || [];
             myGameArea.keys[e.keyCode] = e.type == "keydown";
@@ -110,7 +112,7 @@
       function updateGameArea() {
         var x, height, gap, minHeight, maxHeight, minGap, maxGap;
         for (i = 0; i < myObstacles.length; i += 1) {
-          if (myGamePiece.crashWith(myObstacles[i])) {
+          if (myGamePieceHitbox.crashWith(myObstacles[i])) {
             myGameArea.stop();
             alert("GAME OVER " + myScore.text);
             window.location.reload();
@@ -120,28 +122,31 @@
         myGameArea.clear();
         myGamePiece.speedX = 0;
         myGamePiece.speedY = 0;
-        if (myGameArea.keys && myGameArea.keys[37]) {
-          myGamePiece.speedX = -2.5;
-        }
-        if (myGameArea.keys && myGameArea.keys[39]) {
+        myGamePieceHitbox.x = myGamePiece.x;
+        myGamePieceHitbox.y = myGamePiece.y;
+        myGamePieceHitbox.newPos();
+        if (myGameArea.keys && myGameArea.keys[68]) {
           myGamePiece.speedX = 3;
         }
-        if (myGameArea.keys && myGameArea.keys[38]) {
-          myGamePiece.speedY = -2.5;
+        if (myGameArea.keys && myGameArea.keys[65]) {
+          myGamePiece.speedX = -3;
         }
-        if (myGameArea.keys && myGameArea.keys[40]) {
-          myGamePiece.speedY = 2.5;
+        if (myGameArea.keys && myGameArea.keys[83]) {
+          myGamePiece.speedY = 3;
+        }
+        if (myGameArea.keys && myGameArea.keys[87]) {
+          myGamePiece.speedY = -3;
         }
         myGameArea.frameNo += 1;
-        if (myGameArea.frameNo == 1 || everyinterval(60)) {
+        if (myGameArea.frameNo < 1 || everyinterval(60)) {
           x = myGameArea.canvas.width;
-          minHeight = 20;
+          minHeight = 30;
           maxHeight = 100;
           height = Math.floor(
             Math.random() * (maxHeight - minHeight + 90) + minHeight
           );
-          minGap = 50;
-          maxGap = 120;
+          minGap = 55;
+          maxGap = 100;
           gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
           myObstacles.push(
             new component(50, height, "green", x, 0, "obstacle", "dhaiuh.png")
@@ -156,13 +161,17 @@
               "obstacle",
               "brie.png"
             )
-          );
+          )
         }
-        for (i = 0; i < myObstacles.length; i += 1) {
-          myObstacles[i].x += -7.5;
-          myObstacles[i].newPos();
-          myObstacles[i].update();
-        }
+          var obstacleSpeed = 5; 
+var acceleration = 0.08; 
+
+for (i = 0; i < myObstacles.length; i += 1) {
+    myObstacles[i].x += -obstacleSpeed;
+    obstacleSpeed += acceleration; 
+    myObstacles[i].newPos();
+    myObstacles[i].update();
+}
         myScore.text = "SCORE: " + myGameArea.frameNo;
         myScore.update();
         myGamePiece.newPos();
@@ -176,5 +185,9 @@
         return false;
       }
     </script>
+<div><h>컨트롤 W,A,S,D </h></div>
+    <div><h>1000점 소상품</h></div>
+      <div><div><h>2500점 중상품</h></div></div>
+    <div>3000점 대상품</div>
   </body>
 </html>
